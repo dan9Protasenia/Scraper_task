@@ -47,10 +47,10 @@ Develop a web scraper in Python using the Selenium framework, define a common in
 
 ### Note:
 - You are free to use any additional libraries or tools you find suitable for the task.
-- Make sure to adhere to best practices in terms of code readability, structure, and documentation also dont forget about PEP8.
+- Make sure to adhere to best practices in terms of code readability, structure, and documentation also don't forget about PEP8.
 - Use Python 3.10 or above.
 - Use poetry as dependency manager and config storage.
-- Add popular linters and formattetes.
+- Add popular linters and formatters.
 
 ### Proposed project structure:
 ```
