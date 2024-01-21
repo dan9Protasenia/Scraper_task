@@ -1,7 +1,8 @@
 import json
-import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
 from ..core.scraper_interface import WebScraperInterface
 
 
@@ -25,7 +26,7 @@ class HackerNewsScraper(WebScraperInterface):
         return data
 
     def write_data(self, data, filename: str):
-        with open(filename, 'w', encoding='utf-8') as file:
+        with open(filename, "w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
 
     def apply_filters(self, **kwargs):
