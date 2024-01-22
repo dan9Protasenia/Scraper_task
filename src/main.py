@@ -1,5 +1,6 @@
 import sys
 
+from .b4s.hh_scraper import HhScraper
 from .b4s.nyt_scraper import NYTimesScraperBS
 from .selenium.hacker_news_scraper import HackerNewsScraper
 from .selenium.rabota_scraper import RabotaScraper
@@ -41,6 +42,20 @@ def main():
             )
             data = scraper.extract_data()
             scraper.write_data(data, "rabota_data.json")
+            scraper.driver.quit()
+            print("Rabota scraping and writing complete.")
+
+        if "hh" in sys.argv:
+            print("Starting Rabota scraper...")
+            scraper = HhScraper()
+            scraper.initialize_scraper()
+            scraper.navigate_to_page(
+                "https://hh.ru/search/vacancy?L_save_area=true&text=python+&excluded_"
+                "text=&area=1002&salary=&currency_code=RUR&experience=doesNotMatter&order"
+                "_by=relevance&search_period=0&items_on_page=50"
+            )
+            data = scraper.extract_data()
+            scraper.write_data(data, "hh_data.json")
             scraper.driver.quit()
             print("Rabota scraping and writing complete.")
 
