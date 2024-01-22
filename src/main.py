@@ -2,6 +2,7 @@ import sys
 
 from .b4s.nyt_scraper import NYTimesScraperBS
 from .selenium.hacker_news_scraper import HackerNewsScraper
+from .selenium.rabota_scraper import RabotaScraper
 
 
 def main():
@@ -28,6 +29,20 @@ def main():
             scraper.write_data(data, "hacker_news_data.json")
             scraper.driver.quit()
             print("Hacker News data scraping and writing complete.")
+
+        if "rabota" in sys.argv:
+            print("Starting Rabota scraper...")
+            scraper = RabotaScraper()
+            scraper.initialize_scraper()
+            scraper.navigate_to_page(
+                "https://rabota.by/search/vacancy?L_save_area=true&text=Python&excluded_text=&area"
+                "=1002&salary=&currency_code=BYR&experience=doesNotMatter&order_by=relevance&search"
+                "_period=0&items_on_page=50"
+            )
+            data = scraper.extract_data()
+            scraper.write_data(data, "rabota_data.json")
+            scraper.driver.quit()
+            print("Rabota scraping and writing complete.")
 
 
 if __name__ == "__main__":
