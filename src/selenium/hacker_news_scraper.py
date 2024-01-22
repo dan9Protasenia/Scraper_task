@@ -3,6 +3,7 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
+from ..core.schemas.data import Article
 from ..core.scraper_interface import WebScraperInterface
 
 
@@ -17,17 +18,22 @@ class HackerNewsScraper(WebScraperInterface):
         self.driver.get(url)
 
     def extract_data(self):
-        posts = self.driver.find_elements(By.CSS_SELECTOR, "tr.athing .title a")
+        posts_elements = self.driver.find_elements(By.CSS_SELECTOR,
+                                                   "tr.athing .title a")
         data = []
-        for post in posts:
+        for post in posts_elements:
             link = post.get_attribute("href")
             if not link.startswith("https://news.ycombinator.com/from?site="):
-                data.append({"title": post.text, "link": link})
+                article = Article(title=post.text, link=link)
+                data.append(article)
         return data
 
-    def write_data(self, data, filename: str):
+    def write_data(self, articles: list, filename: str):
+        articles_data = [article.dict() for article in articles]
+        formatted_json = json.dumps(articles_data, ensure_ascii=False, indent=4)
+
         with open(filename, "w", encoding="utf-8") as file:
-            json.dump(data, file, ensure_ascii=False, indent=4)
+            file.write(formatted_json)
 
     def apply_filters(self, **kwargs):
         ...
