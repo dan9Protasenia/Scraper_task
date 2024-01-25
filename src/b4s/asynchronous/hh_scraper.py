@@ -7,7 +7,6 @@ from ...scraper_interface_async import WebScraperInterfaceAsync
 
 
 class HhScraperAsync(WebScraperInterfaceAsync):
-
     async def extract_data(self, html: str) -> List[Article]:
         soup = BeautifulSoup(html, "html.parser")
         posts_elements = soup.select("a.bloko-link")
