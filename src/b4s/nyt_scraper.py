@@ -1,17 +1,10 @@
-import json
-
-import requests
 from bs4 import BeautifulSoup
 
 from ..core.schemas.data import Article
+from ..scraper_interface import WebScraperInterface
 
 
-class NYTimesScraperBS:
-    def fetch_html(self, url: str) -> str:
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.text
-
+class NYTimesScraperBS(WebScraperInterface):
     def extract_data(self, html: str) -> list:
         soup = BeautifulSoup(html, "html.parser")
         data = []
@@ -31,9 +24,3 @@ class NYTimesScraperBS:
                 continue
 
         return data
-
-    def write_data(self, articles: list, filename: str):
-        articles_data = [article.dict() for article in articles]
-        formatted_json = json.dumps(articles_data, ensure_ascii=False, indent=4)
-        with open(filename, "w", encoding="utf-8") as file:
-            file.write(formatted_json)

@@ -18,7 +18,7 @@ def main():
             articles_data = scraper.extract_data(html_content)
             print(f"Extracted {len(articles_data)} articles")
             print("Writing data to file...")
-            scraper.write_data(articles_data, "nyt_articles.json")
+            scraper.write_data(articles_data, "nyt_data.json")
             print("NYT data scraping and writing complete.")
 
         if "hack" in sys.argv:
@@ -46,18 +46,21 @@ def main():
             print("Rabota scraping and writing complete.")
 
         if "hh" in sys.argv:
-            print("Starting Rabota scraper...")
-            scraper = HhScraper()
-            scraper.initialize_scraper()
-            scraper.navigate_to_page(
-                "https://hh.ru/search/vacancy?L_save_area=true&text=python+&excluded_"
-                "text=&area=1002&salary=&currency_code=RUR&experience=doesNotMatter&order"
-                "_by=relevance&search_period=0&items_on_page=50"
+            print("Starting HH scraper...")
+            url = (
+                "https://hh.ru/search/vacancy?L_save_area=true&text=python&excluded_text=&area=10"
+                "02&salary=&currency_code=RUR&experience=doesNotMatter&order_by=relevance&search_"
+                "period=0&items_on_page=50"
             )
-            data = scraper.extract_data()
-            scraper.write_data(data, "hh_data.json")
-            scraper.driver.quit()
-            print("Rabota scraping and writing complete.")
+            scraper = HhScraper()
+            print(f"Fetching HTML content for {url}")
+            html_content = scraper.fetch_html(url)
+            print("Extracting data...")
+            articles_data = scraper.extract_data(html_content)
+            print(f"Extracted {len(articles_data)} articles")
+            print("Writing data to file...")
+            scraper.write_data(articles_data, "hh_data.json")
+            print("HH data scraping and writing complete.")
 
 
 if __name__ == "__main__":
