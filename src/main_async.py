@@ -1,9 +1,12 @@
+# async
 import asyncio
 import logging
 import sys
 
 from .b4s.asynchronous.hh_scraper import HhScraperAsync
 from .b4s.asynchronous.nyt_scraper import NYTimesScraperAsync
+from .selenium.asynchronous.hacker_news_scraper import HackerNewsScraperAsync
+from .selenium.asynchronous.rabota_scraper import RabotaScraperAsync
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
@@ -34,6 +37,36 @@ async def main():
             scraper = NYTimesScraperAsync()
 
             await scraper.scrape(url, filename)
+            logger.info("NYT Scraper (Async) completed")
+
+        if "rabota_async" in sys.argv:
+            logger.info("Starting Rabota Scraper (Async)")
+            url = ("https://rabota.by/search/vacancy?L_save_area=true&text=Python&excluded"
+                   "_text=&area=1002&salary=&currency_code=BYR&experience=doesNotMatter&or"
+                   "der_by=relevance&search_period=0&items_on_page=50")
+
+            filename = "rabota_data_async.json"
+            scraper = RabotaScraperAsync()
+
+            try:
+                await scraper.scrape_selenium(url, filename)
+            finally:
+                scraper.close()
+
+            logger.info("NYT Scraper (Async) completed")
+
+        if "hack_async" in sys.argv:
+            logger.info("Starting Hacker Scraper (Async)")
+            url = "https://news.ycombinator.com/"
+
+            filename = "hack_data_async.json"
+            scraper = HackerNewsScraperAsync()
+
+            try:
+                await scraper.scrape_selenium(url, filename)
+            finally:
+                scraper.close()
+
             logger.info("NYT Scraper (Async) completed")
 
 
