@@ -1,9 +1,11 @@
 import sys
+import asyncio
 
-from .b4s.hh_scraper import HhScraper
-from .b4s.nyt_scraper import NYTimesScraperBS
-from .selenium.hacker_news_scraper import HackerNewsScraper
-from .selenium.rabota_scraper import RabotaScraper
+# sync
+from .b4s.sync.hh_scraper import HhScraper
+from .b4s.sync.nyt_scraper import NYTimesScraperBS
+from .selenium.sync.hacker_news_scraper import HackerNewsScraper
+from .selenium.sync.rabota_scraper import RabotaScraper
 
 
 def main():

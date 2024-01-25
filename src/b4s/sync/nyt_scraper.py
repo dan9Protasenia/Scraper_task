@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 
-from ..core.schemas.data import Article
-from ..scraper_interface import WebScraperInterface
+from ...core.schemas.data import Article
+from ...scraper_interface import WebScraperInterface
 
 
 class NYTimesScraperBS(WebScraperInterface):

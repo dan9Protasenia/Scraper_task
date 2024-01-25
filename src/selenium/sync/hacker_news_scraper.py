@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
-from ..core.schemas.data import Article
-from ..scraper_interface import WebScraperInterface
+from ...core.schemas.data import Article
+from ...scraper_interface import WebScraperInterface
 
 
 class HackerNewsScraper(WebScraperInterface):
