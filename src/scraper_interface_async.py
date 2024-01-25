@@ -1,13 +1,26 @@
+import asyncio
 import json
-from typing import Any, List, Protocol
+from concurrent.futures import ThreadPoolExecutor
+from typing import List
 
 import aiofiles
 import aiohttp
 
+from selenium import webdriver
+
 from .core.schemas.data import Article
 
 
-class WebScraperInterfaceAsync(Protocol):
+class WebScraperInterfaceAsync:
+    def __init__(self):
+        self.driver = webdriver.Chrome()
+        self.executor = ThreadPoolExecutor(max_workers=1)
+
+    async def fetch_html_selenium(self, session, url: str) -> str:
+        loop = asyncio.get_event_loop()
+        await loop.run_in_executor(self.executor, self.driver.get, url)
+        return self.driver.page_source
+
     async def fetch_html(self, session: aiohttp.ClientSession, url: str) -> str:
         try:
             async with session.get(url) as response:
@@ -31,3 +44,12 @@ class WebScraperInterfaceAsync(Protocol):
             html = await self.fetch_html(session, url)
             articles = await self.extract_data(html)
             await self.write_data(articles, filename)
+
+    async def scrape_selenium(self, url: str, filename: str) -> None:
+        async with aiohttp.ClientSession() as session:
+            html = await self.fetch_html_selenium(session, url)
+            articles = await self.extract_data(html)
+            await self.write_data(articles, filename)
+
+    def close(self):
+        self.driver.quit()
