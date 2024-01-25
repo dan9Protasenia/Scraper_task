@@ -1,13 +1,14 @@
-from Scraper_task.src.core.schemas.data import Article
-from Scraper_task.src.scraper_interface import WebScraperInterface
 from selenium.webdriver.common.by import By
 
+from ...core.schemas.data import Article
+from ...scraper_interface_async import WebScraperInterfaceAsync
 
-class RabotaScraper(WebScraperInterface):
-    def extract_data(self):
+
+class RabotaScraperAsync(WebScraperInterfaceAsync):
+    async def extract_data(self, html: str):
         posts_elements = self.driver.find_elements(By.CSS_SELECTOR, "a.bloko-link")
-
         data = []
+
         for post in posts_elements:
             link = post.get_attribute("href")
             title = post.text
@@ -18,5 +19,5 @@ class RabotaScraper(WebScraperInterface):
 
         return data
 
-    def apply_filters(self, **kwargs):
+    async def apply_filters(self, **kwargs):
         ...
