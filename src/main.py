@@ -1,13 +1,13 @@
 # sync
-import sys
 import logging
+import sys
 
 from .b4s.sync.hh_scraper import HhScraper
 from .b4s.sync.nyt_scraper import NYTimesScraperBS
 from .selenium.sync.hacker_news_scraper import HackerNewsScraper
 from .selenium.sync.rabota_scraper import RabotaScraper
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 

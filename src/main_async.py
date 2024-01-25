@@ -41,9 +41,11 @@ async def main():
 
         if "rabota_async" in sys.argv:
             logger.info("Starting Rabota Scraper (Async)")
-            url = ("https://rabota.by/search/vacancy?L_save_area=true&text=Python&excluded"
-                   "_text=&area=1002&salary=&currency_code=BYR&experience=doesNotMatter&or"
-                   "der_by=relevance&search_period=0&items_on_page=50")
+            url = (
+                "https://rabota.by/search/vacancy?L_save_area=true&text=Python&excluded"
+                "_text=&area=1002&salary=&currency_code=BYR&experience=doesNotMatter&or"
+                "der_by=relevance&search_period=0&items_on_page=50"
+            )
 
             filename = "rabota_data_async.json"
             scraper = RabotaScraperAsync()
