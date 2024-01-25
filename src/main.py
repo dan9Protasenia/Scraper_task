@@ -1,5 +1,5 @@
-import sys
 import asyncio
+import sys
 
 # sync
 from .b4s.sync.hh_scraper import HhScraper
