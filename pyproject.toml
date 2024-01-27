@@ -25,6 +25,7 @@ beautifulsoup4 = "^4.12.3"
 pydantic = "^2.5.3"
 aiohttp = "^3.9.1"
 requests = "^2.31.0"
+mypy = "^1.8.0"
 
 # Apps for test build
 [tool.poetry.group.test]
