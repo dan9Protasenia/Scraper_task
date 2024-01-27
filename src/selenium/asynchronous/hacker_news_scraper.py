@@ -1,14 +1,15 @@
+from typing import List
+
 from selenium.webdriver.common.by import By
+from src.core.interface.scraper_interface_async import SeleniumScraperBase
+from src.core.schemas.data import Article
 
-from ...core.schemas.data import Article
-from ...scraper_interface_async import WebScraperInterfaceAsync
 
-
-class HackerNewsScraperAsync(WebScraperInterfaceAsync):
-    async def extract_data(self, html: str):
+class HackerNewsScraperAsync(SeleniumScraperBase):
+    async def _extract_data(self) -> List[Article]:
         posts_elements = self.driver.find_elements(By.CSS_SELECTOR, "tr.athing .title a")
-        data = []
 
+        data = []
         for post in posts_elements:
             link = post.get_attribute("href")
             title = post.text
@@ -18,6 +19,3 @@ class HackerNewsScraperAsync(WebScraperInterfaceAsync):
                 data.append(article)
 
         return data
-
-    async def apply_filters(self, **kwargs):
-        ...
