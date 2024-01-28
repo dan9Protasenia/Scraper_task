@@ -1,13 +1,13 @@
-from typing import Any
+from typing import List
 
 from bs4 import BeautifulSoup
 
-from src.core.interface.scraper_interface import BeautifulSoupScraperBase
-from src.core.schemas import Article
+from src.core.interface.scraper_interface_async import BeautifulSoupScraperBase
+from src.core.schemas.data import Article
 
 
-class HhScraper(BeautifulSoupScraperBase):
-    def _extract_data(self, html: str) -> list[Any]:
+class HhScraperAsync(BeautifulSoupScraperBase):
+    async def _extract_data(self, html: str) -> List[Article]:
         soup = BeautifulSoup(html, "html.parser")
         posts_elements = soup.select("a.bloko-link")
 
@@ -21,8 +21,3 @@ class HhScraper(BeautifulSoupScraperBase):
                 data.append(article)
 
         return data
-
-    def run(self, url: str, filename: str):
-        html_content = self._fetch_html(url)
-        articles_data = self._extract_data(html_content)
-        self._write_data(articles_data, filename)

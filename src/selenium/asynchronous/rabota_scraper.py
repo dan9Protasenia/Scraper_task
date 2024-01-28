@@ -1,16 +1,15 @@
-from typing import Any
+from typing import List
 
 from selenium.webdriver.common.by import By
-from src.core.interface.scraper_interface import SeleniumScraperBase
+from src.core.interface.scraper_interface_async import SeleniumScraperBase
 from src.core.schemas.data import Article
 
 
-class RabotaScraper(SeleniumScraperBase):
-    def _extract_data(self) -> list[Any]:
+class RabotaScraperAsync(SeleniumScraperBase):
+    async def _extract_data(self) -> List[Article]:
         posts_elements = self.driver.find_elements(By.CSS_SELECTOR, "a.bloko-link")
 
         data = []
-
         for post in posts_elements:
             link = post.get_attribute("href")
             title = post.text
@@ -20,10 +19,3 @@ class RabotaScraper(SeleniumScraperBase):
                 data.append(article)
 
         return data
-
-    def run(self, url: str, filename: str):
-        self.initialize_scraper()
-        self.navigate_to_page(url)
-        data = self._extract_data()
-        self._write_data(data, filename)
-        self.driver.quit()

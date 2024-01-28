@@ -1,24 +1,24 @@
 import logging
-from typing import Any
+from typing import List
 
 from bs4 import BeautifulSoup
 
-from src.core.interface.scraper_interface import BeautifulSoupScraperBase
-from src.core.schemas import Article
+from src.core.interface.scraper_interface_async import BeautifulSoupScraperBase
+from src.core.schemas.data import Article
 
 logger = logging.getLogger(__name__)
 
 
-class NYTimesScraperBS(BeautifulSoupScraperBase):
-    def _extract_data(self, html: str) -> list[Any]:
+class NYTimesScraperAsync(BeautifulSoupScraperBase):
+    async def _extract_data(self, html: str) -> List[Article]:
         soup = BeautifulSoup(html, "html.parser")
-        posts_elements = soup.select("section.story-wrapper")
+        article_sections = soup.select("section.story-wrapper")
 
         data = []
 
-        for posts in posts_elements:
+        for section in article_sections:
             try:
-                link_element = posts.select_one('a[class*="css-"]')
+                link_element = section.select_one('a[class*="css-"]')
 
                 if link_element is None:
                     logger.error("Missing link element in section")
@@ -39,14 +39,8 @@ class NYTimesScraperBS(BeautifulSoupScraperBase):
                 else:
                     logger.error("Article title or link is empty")
 
-            except (AttributeError, TypeError) as e:
+            except (AttributeError, TypeError):
                 logger.exception("Error extracting data from section", exc_info=e)
                 continue
 
-        logger.info(f"Total articles extracted: {len(data)}")
         return data
-
-    def run(self, url: str, filename: str):
-        html_content = self._fetch_html(url)
-        articles_data = self._extract_data(html_content)
-        self._write_data(articles_data, filename)
