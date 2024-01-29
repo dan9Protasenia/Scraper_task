@@ -6,6 +6,7 @@ from src.b4s.sync.nyt_scraper import NYTimesScraperBS
 from src.logger_config import setup_logging
 from src.selenium.sync.hacker_news_scraper import HackerNewsScraper
 from src.selenium.sync.rabota_scraper import RabotaScraper
+from src.selenium.sync.lamoda_scraper import LamodaScraperSelenium
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +15,15 @@ def run_nyt_scraper():
     url = "https://www.nytimes.com"
     filename = "nyt_data.json"
     scraper = NYTimesScraperBS()
+    scraper.run(url, filename)
+
+
+def run_lamoda_scraper():
+    url = (
+        f"https://www.lamoda.ru/c/355/clothes-zhenskaya-odezhda/?sitelink=topmenuW&l=3&page="
+    )
+    scraper = LamodaScraperSelenium()
+    filename = "lamoda_data.json"
     scraper.run(url, filename)
 
 
@@ -56,6 +66,8 @@ def main():
             run_rabota_scraper()
         if "hh" in sys.argv:
             run_hh_scraper()
+        if "lamoda" in sys.argv:
+            run_lamoda_scraper()
         else:
             logger.warning("The specified argument is not supported.")
     else:
