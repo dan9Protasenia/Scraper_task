@@ -4,9 +4,11 @@ import logging
 import sys
 
 from src.b4s.asynchronous.hh_scraper import HhScraperAsync
+from src.b4s.asynchronous.lamoda_scraper import LamodaScraperAsync
 from src.b4s.asynchronous.nyt_scraper import NYTimesScraperAsync
 from src.logger_config import setup_logging
 from src.selenium.asynchronous.hacker_news_scraper import HackerNewsScraperAsync
+from src.selenium.asynchronous.lamoda_scraper import LamodaScraperSeleniumAsync
 from src.selenium.asynchronous.rabota_scraper import RabotaScraperAsync
 
 logger = logging.getLogger(__name__)
@@ -23,6 +25,38 @@ async def run_hh_scraper():
     scraper = HhScraperAsync()
 
     await scraper.scrape(url, filename)
+
+
+async def run_lamoda_scraper_b4s():
+    url = "https://www.lamoda.ru/c/355/clothes-zhenskaya-odezhda/?page="
+    filename = "lamoda_data_async.json"
+    scraper = LamodaScraperAsync()
+
+    try:
+        await scraper.scrape(url, filename)
+        logger.info("Scraping completed successfully")
+
+    except Exception as e:
+        logger.error(f"An error occurred during scraping: {e}", exc_info=True)
+
+    finally:
+        logger.info("Scraper closed and resources released")
+
+
+async def run_lamoda_scraper_selenium():
+    url = "https://www.lamoda.ru/c/355/clothes-zhenskaya-odezhda/?page="
+    filename = "lamoda_data_async.json"
+    scraper = LamodaScraperSeleniumAsync()
+
+    try:
+        await scraper.scrape(url, filename)
+        logger.info("Scraping completed successfully")
+
+    except Exception as e:
+        logger.error(f"An error occurred during scraping: {e}", exc_info=True)
+
+    finally:
+        logger.info("Scraper closed and resources released")
 
 
 async def run_nyt_scraper():
@@ -77,15 +111,26 @@ async def run_hack_scraper():
 
 async def main():
     if len(sys.argv) > 1:
+        scraper_run = False
         if "nyt" in sys.argv:
             await run_nyt_scraper()
+            scraper_run = True
         if "hh" in sys.argv:
             await run_hh_scraper()
+            scraper_run = True
         if "rabota" in sys.argv:
             await run_rabota_scraper()
+            scraper_run = True
         if "hack" in sys.argv:
             await run_hack_scraper()
-        else:
+            scraper_run = True
+        if "lamoda_b4s" in sys.argv:
+            await run_lamoda_scraper_b4s()
+            scraper_run = True
+        if "lamoda_sel" in sys.argv:
+            await run_lamoda_scraper_selenium()
+            scraper_run = True
+        if not scraper_run:
             logger.warning("The specified argument is not supported.")
     else:
         logger.warning("No arguments were entered. Please provide an argument to start the scraper.")
