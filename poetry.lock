@@ -993,19 +993,20 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "selenium"
-version = "4.17.1"
+version = "4.17.2"
 description = ""
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "selenium-4.17.1-py3-none-any.whl", hash = "sha256:8375a25188ffd478ad54f653a125efe23477dfbce93af94d46667f3945270bcf"},
-    {file = "selenium-4.17.1.tar.gz", hash = "sha256:8203707502f8200c1882a49b9584b2d84d4be5152f3a418cc731c7cb5e813843"},
+    {file = "selenium-4.17.2-py3-none-any.whl", hash = "sha256:5aee79026c07985dc1b0c909f34084aa996dfe5b307602de9016d7a621a473f2"},
+    {file = "selenium-4.17.2.tar.gz", hash = "sha256:d43d6972e516855fb242ef9ce4ce759057b115070e702e7b1c1032fe7b38d87b"},
 ]
 
 [package.dependencies]
 certifi = ">=2021.10.8"
 trio = ">=0.17,<1.0"
 trio-websocket = ">=0.9,<1.0"
+typing_extensions = ">=4.9.0"
 urllib3 = {version = ">=1.26,<3", extras = ["socks"]}
 
 [[package]]
@@ -1225,4 +1226,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "01eab42c491001c331099ae1161f66d1002095fa7fad3ed429d2fc12a88c4531"
+content-hash = "3e8c321c83c5497562d8b29683e9b678068913e0a3caa77abdc0b51db260b81e"
