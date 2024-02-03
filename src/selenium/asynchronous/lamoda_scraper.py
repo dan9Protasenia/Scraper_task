@@ -1,19 +1,19 @@
 import asyncio
+import json
 import logging
 from typing import Any
 
 import aiofiles
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from src.core.interface.scraper_interface import SeleniumScraperBase
 from src.core.schemas.data import Article
-import json
 
 logger = logging.getLogger(__name__)
 
 
 class LamodaScraperSeleniumAsync(SeleniumScraperBase):
-
     def __init__(self):
         self.driver = None
         logger.info("WebScraperInterface initialized")
@@ -42,7 +42,7 @@ class LamodaScraperSeleniumAsync(SeleniumScraperBase):
 
             title = None
             if brand_element and product_name_element:
-                title = brand_element.text.strip() + ' ' + product_name_element.text.strip()
+                title = brand_element.text.strip() + " " + product_name_element.text.strip()
             else:
                 logger.warning(f"Card {index + 1}: The product name was not found")
 
@@ -65,7 +65,7 @@ class LamodaScraperSeleniumAsync(SeleniumScraperBase):
             await file.write(formatted_json)
             logger.info("Data written successfully")
 
-    async def run(self, url: str, filename: str, max_pages: int = 10):
+    async def scrape(self, url: str, filename: str, max_pages: int = 10):
         await self.initialize_scraper()
         all_articles = []
 
