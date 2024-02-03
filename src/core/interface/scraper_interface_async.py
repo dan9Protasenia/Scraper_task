@@ -49,6 +49,15 @@ class BeautifulSoupScraperBase:
     async def apply_filters(self, **kwargs) -> None:
         raise NotImplementedError("Subclasses should implement this method")
 
+    async def scrape_page(self, session: aiohttp.ClientSession, url: str) -> List[Article]:
+        html = await self._fetch_html(session, url)
+        if html:
+            return await self._extract_data(html)
+        return []
+
+    async def apply_filters(self, **kwargs) -> None:
+        raise NotImplementedError("Subclasses should implement this method")
+
 
 class SeleniumScraperBase:
     def __init__(self):
