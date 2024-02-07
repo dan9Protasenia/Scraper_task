@@ -2,7 +2,6 @@ import asyncio
 import json
 import logging
 from concurrent.futures import ThreadPoolExecutor
-from typing import List
 
 import aiofiles
 import aiohttp
@@ -29,10 +28,10 @@ class BeautifulSoupScraperBase:
 
             return ""
 
-    async def _extract_data(self, html: str) -> List[Article]:
+    async def _extract_data(self, html: str) -> list[Article]:
         raise NotImplementedError("Subclasses should implement this method")
 
-    async def _write_data(self, articles: List[Article], filename: str) -> None:
+    async def _write_data(self, articles: list[Article], filename: str) -> None:
         articles_data = [article.dict() for article in articles]
         formatted_json = json.dumps(articles_data, ensure_ascii=False, indent=4)
 
@@ -49,7 +48,7 @@ class BeautifulSoupScraperBase:
     async def apply_filters(self, **kwargs) -> None:
         raise NotImplementedError("Subclasses should implement this method")
 
-    async def scrape_page(self, session: aiohttp.ClientSession, url: str) -> List[Article]:
+    async def scrape_page(self, session: aiohttp.ClientSession, url: str) -> list[Article]:
         html = await self._fetch_html(session, url)
         if html:
             return await self._extract_data(html)
@@ -74,10 +73,10 @@ class SeleniumScraperBase:
 
         return self.driver.page_source
 
-    async def _extract_data(self) -> List[Article]:
+    async def _extract_data(self) -> list[Article]:
         raise NotImplementedError("Subclasses should implement this method")
 
-    async def _write_data(self, articles: List[Article], filename: str) -> None:
+    async def _write_data(self, articles: list[Article], filename: str) -> None:
         articles_data = [article.dict() for article in articles]
         formatted_json = json.dumps(articles_data, ensure_ascii=False, indent=4)
 
