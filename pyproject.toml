@@ -10,8 +10,6 @@ readme = "README.md"
 python = "^3.12"
 
 # Poetry core
-beautifulsoup4 = "^4.12.3"
-selenium = "^4.17.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
@@ -22,11 +20,12 @@ build-backend = "poetry.core.masonry.api"
 optional = true
 
 [tool.poetry.group.scraper.dependencies]
-selenium = "^4.16.0"
+selenium = "^4.17.2"
 beautifulsoup4 = "^4.12.3"
 pydantic = "^2.5.3"
 aiohttp = "^3.9.1"
 requests = "^2.31.0"
+aiofiles = "^23.2.1"
 
 # Apps for test build
 [tool.poetry.group.test]
