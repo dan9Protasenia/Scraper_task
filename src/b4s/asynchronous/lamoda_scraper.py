@@ -1,6 +1,5 @@
 import asyncio
 import logging
-from typing import Any, List
 
 import aiohttp
 from bs4 import BeautifulSoup
@@ -12,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class LamodaScraperAsync(BeautifulSoupScraperBase):
-    async def _extract_data(self, html: str) -> List[Article]:
+    async def _extract_data(self, html: str) -> list[Article]:
         soup = BeautifulSoup(html, "html.parser")
         product_cards = soup.select(".x-product-card__card")
         logger.info(f"Product cards found: {len(product_cards)}")

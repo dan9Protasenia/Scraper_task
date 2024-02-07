@@ -1,12 +1,10 @@
-from typing import Any
-
 from selenium.webdriver.common.by import By
 from src.core.interface.scraper_interface import SeleniumScraperBase
 from src.core.schemas.data import Article
 
 
 class HackerNewsScraper(SeleniumScraperBase):
-    def _extract_data(self) -> list[Any]:
+    def _extract_data(self) -> list:
         posts_elements = self.driver.find_elements(By.CSS_SELECTOR, "tr.athing .title a")
 
         data = []

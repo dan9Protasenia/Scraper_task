@@ -1,7 +1,6 @@
 import asyncio
 import json
 import logging
-from typing import Any
 
 import aiofiles
 
@@ -29,7 +28,7 @@ class LamodaScraperSeleniumAsync(SeleniumScraperBase):
         logger.info(f"Navigating to page: {url}")
         self.driver.get(url)
 
-    async def _extract_data(self) -> list[Any]:
+    async def _extract_data(self) -> list:
         data = []
 
         product_cards = self.driver.find_elements(By.CSS_SELECTOR, ".x-product-card__card")

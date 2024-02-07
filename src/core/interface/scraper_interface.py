@@ -1,6 +1,5 @@
 import json
 import logging
-from typing import Any
 
 import requests
 
@@ -23,7 +22,7 @@ class BeautifulSoupScraperBase:
 
         return response.text
 
-    def _extract_data(self, html: str) -> list[Any]:
+    def _extract_data(self, html: str) -> list:
         raise NotImplementedError("Subclasses should implement this method")
 
     def _write_data(self, articles: list, filename: str) -> None:
@@ -55,7 +54,7 @@ class SeleniumScraperBase:
         logger.info(f"Navigating to page: {url}")
         self.driver.get(url)
 
-    def _extract_data(self) -> list[Any]:
+    def _extract_data(self) -> list:
         raise NotImplementedError("Subclasses should implement this method")
 
     def _write_data(self, articles: list, filename: str) -> None:
