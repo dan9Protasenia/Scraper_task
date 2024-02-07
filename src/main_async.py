@@ -1,4 +1,3 @@
-# async
 import asyncio
 import logging
 import sys

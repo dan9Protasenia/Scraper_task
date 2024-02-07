@@ -2,6 +2,7 @@ import logging
 import sys
 
 from src.b4s.sync.hh_scraper import HhScraper
+from src.b4s.sync.lamoda_scraper import LamodaScraperB4s
 from src.b4s.sync.nyt_scraper import NYTimesScraperBS
 from src.logger_config import setup_logging
 from src.selenium.sync.hacker_news_scraper import HackerNewsScraper
@@ -18,8 +19,15 @@ def run_nyt_scraper():
     scraper.run(url, filename)
 
 
+def run_lamoda_scraper_b4s():
+    url = "https://www.lamoda.ru/c/355/clothes-zhenskaya-odezhda/?sitelink=topmenuW&l=3&page="
+    filename = "laboda_sync_b4s.json"
+    scraper = LamodaScraperB4s()
+    scraper.run(url, filename)
+
+
 def run_lamoda_scraper():
-    url = f"https://www.lamoda.ru/c/355/clothes-zhenskaya-odezhda/?sitelink=topmenuW&l=3&page="
+    url = "https://www.lamoda.ru/c/355/clothes-zhenskaya-odezhda/?sitelink=topmenuW&l=3&page="
     scraper = LamodaScraperSelenium()
     filename = "lamoda_data.json"
     scraper.run(url, filename)
@@ -72,9 +80,9 @@ def main():
         if "lamoda_sel" in sys.argv:
             run_lamoda_scraper()
             scraper_run = True
-        # if "lamoda_b4s" in sys.argv:
-        #     run_lamoda_scraper_b4s()
-        # scraper_run = True
+        if "lamoda_b4s" in sys.argv:
+            run_lamoda_scraper_b4s()
+        scraper_run = True
         if not scraper_run:
             logger.warning("The specified argument is not supported.")
     else:

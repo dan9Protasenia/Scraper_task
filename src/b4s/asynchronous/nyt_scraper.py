@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 from bs4 import BeautifulSoup
 
@@ -10,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class NYTimesScraperAsync(BeautifulSoupScraperBase):
-    async def _extract_data(self, html: str) -> List[Article]:
+    async def _extract_data(self, html: str) -> list[Article]:
         soup = BeautifulSoup(html, "html.parser")
         article_sections = soup.select("section.story-wrapper")
 
